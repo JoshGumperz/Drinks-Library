@@ -13,6 +13,20 @@ header {
   color: #ffff;
 }
 
+.navbar-brand:hover {
+  color: #ffff;
+  cursor: pointer;
+}
+
+#navbarDropdown{
+  color: #ffff;
+}
+
+#navbarDropdown:hover {
+  color: #ffff;
+  cursor: pointer;
+}
+
 .content{
   width: 90%;
   margin: auto;
