@@ -9,6 +9,37 @@ header {
   width: 20;
 }
 
+.navbar-brand {
+  color: #ffff;
+}
+
+.navbar-brand:hover {
+  color: #ffff;
+  cursor: pointer;
+}
+
+#navbarDropdown{
+  color: #ffff;
+}
+
+#navbarDropdown:hover {
+  color: #ffff;
+  cursor: pointer;
+}
+
+.content{
+  width: 90%;
+  margin: auto;
+}
+
+#cocktail-img {
+  margin-bottom: 10px;
+}
+
+.cocktail-name {
+  margin-bottom: 30px;
+}
+
 ul {
   margin: 0;
   padding: 0;
