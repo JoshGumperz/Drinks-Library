@@ -64,12 +64,11 @@ function getDrinksByOccasionsHelper( category ) {
         return response.json();
     })
     .then( function( data ) {
-        return data;
-    })
-    .then( function ( categories ) {
-        for( var each of categories.drinks ) {
+        // console.log( data );
+        for( var each of data.drinks ) {
             displayRecipe( each );
         }
+        return data;
     })
 }
 
@@ -80,23 +79,23 @@ function displayRecipe( drink ) {
     $('.drinkName-container').append( drinkNameEl );
 
     var drinkID = drink.idDrink;
-    getCockTailRecipeByID( drinkID );
+    // getCockTailRecipeByID( drinkID );
 }
 
 
-function getNutritionInfo() {
-    fetch("https://cors.bridged.cc/https://nutrition-api.esha.com/foods?query=" + drink + "&0&10&true", {
-    headers: {
-        "Ocp-Apim-Subscription-Key": "951b42ae2f4a4413a3d54640205f22c5"
-    }
-    })
-    .then(function(response) {
-        return response.json()
-    })
-    .then(function(data){
-        console.log(data)
-    })
-}
+// function getNutritionInfo() {
+//     fetch("https://cors.bridged.cc/https://nutrition-api.esha.com/foods?query=" + drink + "&0&10&true", {
+//     headers: {
+//         "Ocp-Apim-Subscription-Key": "951b42ae2f4a4413a3d54640205f22c5"
+//     }
+//     })
+//     .then(function(response) {
+//         return response.json()
+//     })
+//     .then(function(data){
+//         console.log(data)
+//     })
+// }
 
 
 
@@ -125,3 +124,6 @@ function getCategories() {
         console.log( data );
     })
 }
+
+
+

@@ -3,13 +3,13 @@ body {
   margin: 0;
 }
 
-header {
+/* header {
   background: #212529;
   padding: 20px;
   width: 20;
-}
+} */
 
-.navbar-brand {
+/* .navbar-brand {
   color: #ffff;
 }
 
@@ -18,16 +18,16 @@ header {
   cursor: pointer;
 }
 
-#navbarDropdown{
+#navbarDropdown {
   color: #ffff;
 }
 
 #navbarDropdown:hover {
   color: #ffff;
   cursor: pointer;
-}
+} */
 
-.content{
+.content {
   width: 90%;
   margin: auto;
 }
@@ -40,7 +40,7 @@ header {
   margin-bottom: 30px;
 }
 
-ul {
+/* ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
@@ -60,7 +60,7 @@ a {
   border-radius: 1px;
   cursor: pointer;
   text-decoration: none;
-}
+} */
 
 .hero-image {
   background-image: url('../Images/pexels-photo-1128678.jpeg');
@@ -78,4 +78,8 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+}
+
+.drinkNameColumn {
+  text-align: center;
 }
