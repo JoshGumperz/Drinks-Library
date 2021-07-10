@@ -58,12 +58,24 @@ header {
   margin: auto;
 }
 
-#cocktail-img {
+.message {
+  width: 90%;
+  margin: auto;
+  display: none;
+}
+
+.nutritional-info {
   margin-bottom: 10px;
 }
 
-.cocktail-name {
-  margin-bottom: 30px;
+#cocktail-img {
+  margin: 5px 12px 5px 5px;
+  float: left;
+}
+
+.message-body h3 {
+  font-weight: bold;
+  font-size: 20px;
 }
 
 /* ul {
@@ -104,4 +116,8 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+}
+
+.drinkNameColumn {
+  text-align: center;
 }
