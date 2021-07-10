@@ -112,11 +112,11 @@ function getCategories() {
 
 
 var drink;
-var i = 0;
+var drinksDisplayedSoFar = 0;
 var drinksArr = [];
 localStorage.setItem( "drinksArr", JSON.stringify( drinksArr ) );
 
-var inputOccasions = [ "Formal Party", "Promotion" ];
+var inputOccasions = [ "Formal Party" ];
 var recipesData = [];
 var recipesDisplayed = 0;
 
@@ -144,7 +144,7 @@ function getDrinksByCategories( categories ) {
             return response.json();
         })
         .then( function( data ) {
-            // console.log( data );
+            console.log( data );
             for( var each of data.drinks) {
                 getCockTailRecipeByID( each.idDrink );
             }
@@ -159,12 +159,8 @@ function getCockTailRecipeByID( id ) {
         return response.json()
     })
     .then(function(data){
-        console.log( data );
-        // recipesData.push( data.drinks[0] );
+        // console.log( data );
         storeData( data );
-        // var recipeEl = $( '<p>' );
-        // recipeEl.text( data.drinks[0].strInstructions );
-        // $( '.recipe-container' ).append( recipeEl );
     })
     .then( function () {
         displayDrinkData();
@@ -175,18 +171,17 @@ function getCockTailRecipeByID( id ) {
 function storeData( data ) {
     var drinksArr = JSON.parse( localStorage.getItem( "drinksArr" ) );
     drinksArr.push( data.drinks[0] );
-    // console.log( drinksArr );
+    console.log( drinksArr );
     localStorage.setItem( "drinksArr", JSON.stringify( drinksArr ) );
 }
 
 
 function displayDrinkData( ) {
     var drinksArr = JSON.parse( localStorage.getItem( "drinksArr" ) );
-    // console.log( drinksArr );
+    // console.log( drinksArr.length );
 
-    
     var drinkName = drinksArr[ drinksArr.length - 1 ].strDrink;
-    $( '#' + ( i + 1 ) ).children('p').text( drinkName );
-    i++;
+    $( '#' + ( drinksDisplayedSoFar + 1 ) ).children('p').text( drinkName );
+    drinksDisplayedSoFar++;
 
 }
