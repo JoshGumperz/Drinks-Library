@@ -8,7 +8,7 @@ var occasions = [
         categories : [ "Shot", "Beer" ]
     },
     Promotion = {
-        description : "Promotin",
+        description : "Promotion",
         categories : [ "Shot", "Beer" ]
     },
     Birthday = { 
@@ -40,37 +40,37 @@ var occasions = [
 
 // getCategories();
 // getCockTail();
-getDrinksByOccasions();
+// getDrinksByOccasions();
 
-var drink;
 
-function getDrinksByOccasions() {
-    // for( var occasion of occasions ) {
-    //     for( var category of occasion.categories ) {
-    //         getDrinksByOccasionsHelper( category );
-    //     }
-    // }
-    var drinkNameEl = $('<h2>' );
-    drinkNameEl.text( "Occasion: " + occasions[0].description );
-    $( '.drinkName-container' ).append( drinkNameEl );
-    for( var category of occasions[0].categories ) {
-        getDrinksByOccasionsHelper( category );
-    }
-}
 
-function getDrinksByOccasionsHelper( category ) {
-    fetch( "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + category )
-    .then( function ( response ) {
-        return response.json();
-    })
-    .then( function( data ) {
-        // console.log( data );
-        for( var each of data.drinks ) {
-            displayRecipe( each );
-        }
-        return data;
-    })
-}
+// function getDrinksByOccasions() {
+//     // for( var occasion of occasions ) {
+//     //     for( var category of occasion.categories ) {
+//     //         getDrinksByOccasionsHelper( category );
+//     //     }
+//     // }
+//     var drinkNameEl = $('<h2>' );
+//     drinkNameEl.text( "Occasion: " + occasions[0].description );
+//     $( '.drinkName-container' ).append( drinkNameEl );
+//     for( var category of occasions[0].categories ) {
+//         getDrinksByOccasionsHelper( category );
+//     }
+// }
+
+// function getDrinksByOccasionsHelper( category ) {
+//     fetch( "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + category )
+//     .then( function ( response ) {
+//         return response.json();
+//     })
+//     .then( function( data ) {
+//         // console.log( data );
+//         for( var each of data.drinks ) {
+//             displayRecipe( each );
+//         }
+//         return data;
+//     })
+// }
 
 
 function displayRecipe( drink ) {
@@ -79,7 +79,7 @@ function displayRecipe( drink ) {
     $('.drinkName-container').append( drinkNameEl );
 
     var drinkID = drink.idDrink;
-    // getCockTailRecipeByID( drinkID );
+    return getCockTailRecipeByID( drinkID );
 }
 
 
@@ -99,22 +99,7 @@ function displayRecipe( drink ) {
 
 
 
-function getCockTailRecipeByID( id ) {
-    fetch("https://cors.bridged.cc/http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007")
-    .then(function(response) {
-        return response.json()
-    })
-    .then(function(data){
-        console.log( data );
-        var recipeEl = $( '<p>' );
-        recipeEl.text( data.drinks[0].strInstructions );
-        $( '.recipe-container' ).append( recipeEl );
-    })
-    // .then( function () {
-    //     getNutritionInfo();
-    // })
-}
-
+// For testing purposes
 function getCategories() {
     fetch( "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list" )
     .then( function( response ) {
@@ -126,4 +111,70 @@ function getCategories() {
 }
 
 
+var drink;
+var drinksArr = [];
+localStorage.setItem( "drinksArr", JSON.stringify( drinksArr ) );
 
+var inputOccasions = [ "Formal Party", "Promotion" ];
+var recipesData = [];
+var recipesDisplayed = 0;
+
+handleUserInputOccasions();
+console.log( recipesData );
+
+
+function handleUserInputOccasions() {
+
+    
+    for( var each of inputOccasions ) {
+        for( var j of occasions ) {
+            if( each === j.description ) {
+                getDrinksByCategories( j.categories );
+            }
+        }
+    }
+}
+
+
+function getDrinksByCategories( categories ) {
+    for( var category of categories ) {
+        fetch( "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + category )
+        .then( function ( response ) {
+            return response.json();
+        })
+        .then( function( data ) {
+            // console.log( data );
+            getCockTailRecipeByID( data.drinks[0].idDrink );
+        })
+    }
+}
+
+
+function getCockTailRecipeByID( id ) {
+    fetch("https://cors.bridged.cc/http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007")
+    .then(function(response) {
+        return response.json()
+    })
+    .then(function(data){
+        console.log( data );
+        // recipesData.push( data.drinks[0] );
+        storeData( data );
+        // var recipeEl = $( '<p>' );
+        // recipeEl.text( data.drinks[0].strInstructions );
+        // $( '.recipe-container' ).append( recipeEl );
+    })
+    // .then( function () {
+    //     getNutritionInfo();
+    // })
+}
+
+
+function storeData( data ) {
+    var drinksArr = JSON.parse( localStorage.getItem( "drinksArr" ) );
+    drinksArr.push( data.drinks[0] );
+    localStorage.setItem( "drinksArr", JSON.stringify( drinksArr ) );
+}
+
+// function displayDrinkName() {
+
+// )
