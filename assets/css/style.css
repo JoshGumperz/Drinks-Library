@@ -27,7 +27,7 @@ header {
   margin: 5px 0px 0px 20px;
 }
 
-.search-bar {
+.search-form {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -53,15 +53,19 @@ header {
   font-style: italic;
 }
 
-.content{
-  width: 90%;
-  margin: auto;
+.drinkNameColumn {
+  display: none;
 }
 
 .message {
   width: 90%;
   margin: auto;
+  margin-top: 50px;
   display: none;
+}
+
+#cocktail-name {
+  margin-left: 15px;
 }
 
 .nutritional-info {
