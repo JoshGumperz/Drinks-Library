@@ -115,6 +115,7 @@ var drink;
 var drinksDisplayedSoFar = 0;
 var drinksArr = [];
 localStorage.setItem( "drinksArr", JSON.stringify( drinksArr ) );
+var ingredientsArr = [];
 
 var inputOccasions = [ "Formal Party" ];
 var recipesData = [];
@@ -144,7 +145,7 @@ function getDrinksByCategories( categories ) {
             return response.json();
         })
         .then( function( data ) {
-            console.log( data );
+            // console.log( data );
             for( var each of data.drinks) {
                 getCockTailRecipeByID( each.idDrink );
             }
@@ -178,15 +179,40 @@ function storeData( data ) {
 
 function displayDrinkData( ) {
     var drinksArr = JSON.parse( localStorage.getItem( "drinksArr" ) );
-    // console.log( drinksArr.length );
+    console.log( drinksArr );
 
-    var drinkName = drinksArr[ drinksArr.length - 1 ].strDrink;
+    var drink = drinksArr[ drinksArr.length - 1 ];
+
+    var drinkName = drink.strDrink;
+    var btnEl = $( '#' + ( drinksDisplayedSoFar + 1 ) ).children( 'button' );
+    btnEl.text( drinkName );
+
     
-    // var btnEl = $( '#' + ( drinksDisplayedSoFar + 1 ) ).children('button');
-    // console.log( btnEl.textContent );
+    var recipeEl = $( '#' + ( drinksDisplayedSoFar + 1 ) ).children( 'p' );
 
-    var btnEl = $( '#1' ).children('button');
-    console.log( btnEl.text() );
+    getIngredientListForDrink( drink );
+
+    
+
+
     drinksDisplayedSoFar++;
-
+    // var btnEl = $( '#1' ).children('button');
+    // console.log( btnEl.text( drinkName ) );
+    
 }
+
+function getIngredientListForDrink( drink ) {
+    var ingredientIdx = 1;
+    var done = false;
+    var ingredientKey = "strIngredient" + ingredientIdx;
+    // console.log( drink[ "strIngredient" + ingredientIdx ] );
+
+    while(  drink[ "strIngredient" + ingredientIdx ] != null ) {
+        console.log( "got here" );
+        ingredientsArr.push( drink[ "strIngredient" + ingredientIdx ] );
+        ingredientIdx++;
+        ingredientKey = "strIngredient" + ingredientIdx ;
+    }
+    console.log( ingredientsArr );
+}
+    
