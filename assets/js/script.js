@@ -73,14 +73,14 @@ var occasions = [
 // }
 
 
-function displayRecipe( drink ) {
-    var drinkNameEl = $( '<h3>' );
-    drinkNameEl.text( drink.strDrink );
-    $('.drinkName-container').append( drinkNameEl );
+// function displayRecipe( drink ) {
+//     var drinkNameEl = $( '<h3>' );
+//     drinkNameEl.text( drink.strDrink );
+//     $('.drinkName-container').append( drinkNameEl );
 
-    var drinkID = drink.idDrink;
-    return getCockTailRecipeByID( drinkID );
-}
+//     var drinkID = drink.idDrink;
+//     return getCockTailRecipeByID( drinkID );
+// }
 
 
 // function getNutritionInfo() {
@@ -100,15 +100,15 @@ function displayRecipe( drink ) {
 
 
 // For testing purposes
-function getCategories() {
-    fetch( "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list" )
-    .then( function( response ) {
-        return response.json();
-    })
-    .then( function( data ) {
-        console.log( data );
-    })
-}
+// function getCategories() {
+//     fetch( "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list" )
+//     .then( function( response ) {
+//         return response.json();
+//     })
+//     .then( function( data ) {
+//         console.log( data );
+//     })
+// }
 
 
 var drink;
@@ -171,7 +171,7 @@ function getCockTailRecipeByID( id ) {
 function storeData( data ) {
     var drinksArr = JSON.parse( localStorage.getItem( "drinksArr" ) );
     drinksArr.push( data.drinks[0] );
-    console.log( drinksArr );
+    // console.log( drinksArr );
     localStorage.setItem( "drinksArr", JSON.stringify( drinksArr ) );
 }
 
@@ -181,7 +181,12 @@ function displayDrinkData( ) {
     // console.log( drinksArr.length );
 
     var drinkName = drinksArr[ drinksArr.length - 1 ].strDrink;
-    $( '#' + ( drinksDisplayedSoFar + 1 ) ).children('p').text( drinkName );
+    
+    // var btnEl = $( '#' + ( drinksDisplayedSoFar + 1 ) ).children('button');
+    // console.log( btnEl.textContent );
+
+    var btnEl = $( '#1' ).children('button');
+    console.log( btnEl.text() );
     drinksDisplayedSoFar++;
 
 }
