@@ -112,6 +112,7 @@ function getCategories() {
 
 
 var drink;
+var i = 0;
 var drinksArr = [];
 localStorage.setItem( "drinksArr", JSON.stringify( drinksArr ) );
 
@@ -120,12 +121,11 @@ var recipesData = [];
 var recipesDisplayed = 0;
 
 handleUserInputOccasions();
-console.log( recipesData );
+// console.log( recipesData );
 
 
-function handleUserInputOccasions() {
+async function handleUserInputOccasions() {
 
-    
     for( var each of inputOccasions ) {
         for( var j of occasions ) {
             if( each === j.description ) {
@@ -133,6 +133,7 @@ function handleUserInputOccasions() {
             }
         }
     }
+    
 }
 
 
@@ -144,14 +145,16 @@ function getDrinksByCategories( categories ) {
         })
         .then( function( data ) {
             // console.log( data );
-            getCockTailRecipeByID( data.drinks[0].idDrink );
+            for( var each of data.drinks) {
+                getCockTailRecipeByID( each.idDrink );
+            }
         })
     }
 }
 
 
 function getCockTailRecipeByID( id ) {
-    fetch("https://cors.bridged.cc/http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=11007")
+    fetch("https://cors.bridged.cc/http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + id )
     .then(function(response) {
         return response.json()
     })
@@ -163,18 +166,27 @@ function getCockTailRecipeByID( id ) {
         // recipeEl.text( data.drinks[0].strInstructions );
         // $( '.recipe-container' ).append( recipeEl );
     })
-    // .then( function () {
-    //     getNutritionInfo();
-    // })
+    .then( function () {
+        displayDrinkData();
+    })
 }
 
 
 function storeData( data ) {
     var drinksArr = JSON.parse( localStorage.getItem( "drinksArr" ) );
     drinksArr.push( data.drinks[0] );
+    // console.log( drinksArr );
     localStorage.setItem( "drinksArr", JSON.stringify( drinksArr ) );
 }
 
-// function displayDrinkName() {
 
-// )
+function displayDrinkData( ) {
+    var drinksArr = JSON.parse( localStorage.getItem( "drinksArr" ) );
+    // console.log( drinksArr );
+
+    
+    var drinkName = drinksArr[ drinksArr.length - 1 ].strDrink;
+    $( '#' + ( i + 1 ) ).children('p').text( drinkName );
+    i++;
+
+}
