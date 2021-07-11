@@ -121,16 +121,26 @@ var inputOccasions = [ "Formal Party" ];
 var recipesData = [];
 var recipesDisplayed = 0;
 
+
+
+
 handleUserInputOccasions();
+setTimeout( function() { displayDrinkData() }, 3000 );
+    
+    
+
+$( '.nextThree' ).on( 'click', displayDrinkData );
+
+
 // console.log( recipesData );
 
 
 async function handleUserInputOccasions() {
-
     for( var each of inputOccasions ) {
         for( var j of occasions ) {
             if( each === j.description ) {
-                getDrinksByCategories( j.categories );
+                await getDrinksByCategories( j.categories );
+                // main( j.categories );
             }
         }
     }
@@ -138,9 +148,24 @@ async function handleUserInputOccasions() {
 }
 
 
-function getDrinksByCategories( categories ) {
+// async function main( categories ) {
+//     for( var category of categories ) {
+//         const res = await fetch( "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + category );
+//         var data = res.body;
+//         console.log( data );
+//         console.log( data[2] );
+//         for( var each of data.PromiseResult.drinks ) {
+//             getCockTailRecipeByID( each.idDrink );
+//         }
+//     }
+// }
+
+
+
+
+async function getDrinksByCategories( categories ) {
     for( var category of categories ) {
-        fetch( "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + category )
+        await fetch( "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + category )
         .then( function ( response ) {
             return response.json();
         })
@@ -154,18 +179,19 @@ function getDrinksByCategories( categories ) {
 }
 
 
-function getCockTailRecipeByID( id ) {
-    fetch("https://cors.bridged.cc/http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + id )
+async function getCockTailRecipeByID( id ) {
+    await fetch("https://cors.bridged.cc/http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + id )
     .then(function(response) {
         return response.json()
     })
-    .then(function(data){
+    .then(function( data ){
         // console.log( data );
-        storeData( data );
+        // storeData( data );
+        drinksArr.push( data.drinks );
     })
-    .then( function () {
-        displayDrinkData();
-    })
+    // .then( function () {
+    //     displayDrinkData();
+    // })
 }
 
 
@@ -178,41 +204,70 @@ function storeData( data ) {
 
 
 function displayDrinkData( ) {
-    var drinksArr = JSON.parse( localStorage.getItem( "drinksArr" ) );
-    console.log( drinksArr );
+    // var drinksArr = JSON.parse( localStorage.getItem( "drinksArr" ) );
+    // console.log( drinksArr );
 
-    var drink = drinksArr[ drinksArr.length - 1 ];
+    clearDisplay();
 
-    var drinkName = drink.strDrink;
-    var btnEl = $( '#' + ( drinksDisplayedSoFar + 1 ) ).children( 'button' );
-    btnEl.text( drinkName );
+    for( var i = 1; i < 4; i++ ) {
 
-    
-    var recipeEl = $( '#' + ( drinksDisplayedSoFar + 1 ) ).children( 'p' );
+        var recipeEl = $( '#' + i );
 
-    getIngredientListForDrink( drink );
+        var drink = drinksArr[ drinksDisplayedSoFar ];
+        var drinkName = drink[0].strDrink;
+        var btnEl = recipeEl.children( 'button' );
+        btnEl.text( drinkName );
 
-    
+        var detailEl = $( '<p>' );
+        detailEl.text( drink[0].strInstructions );
+        recipeEl.append( detailEl );
 
-
-    drinksDisplayedSoFar++;
-    // var btnEl = $( '#1' ).children('button');
-    // console.log( btnEl.text( drinkName ) );
-    
+        drinksDisplayedSoFar++;
+    } 
 }
 
-function getIngredientListForDrink( drink ) {
-    var ingredientIdx = 1;
-    var done = false;
-    var ingredientKey = "strIngredient" + ingredientIdx;
-    // console.log( drink[ "strIngredient" + ingredientIdx ] );
+function clearDisplay() {
 
-    while(  drink[ "strIngredient" + ingredientIdx ] != null ) {
-        console.log( "got here" );
-        ingredientsArr.push( drink[ "strIngredient" + ingredientIdx ] );
-        ingredientIdx++;
-        ingredientKey = "strIngredient" + ingredientIdx ;
+    for( var i = 1; i < 4; i++ ) {
+       $( '#' + i ).children( 'button' ).text(''); 
+       $( '#' + i ).children( 'p' ).text('');
     }
-    console.log( ingredientsArr );
 }
-    
+
+
+// function collectRecipeInfo( drink ) {
+//     var ingredientIdx = 1;
+//     var done = false;
+//     var ingredientKey = "strIngredient" + ingredientIdx;
+//     // console.log( drink[ "strIngredient" + ingredientIdx ] );
+
+//     while(  drink[ "strIngredient" + ingredientIdx ] != null ) {
+//         ingredientsArr.push( drink[ "strIngredient" + ingredientIdx ] );
+//         ingredientIdx++;
+//         ingredientKey = "strIngredient" + ingredientIdx ;
+//     }
+//     // console.log( ingredientsArr );
+
+
+
+// }
+
+
+
+// For when the user directly search a drink
+function getCockTail(drink) {
+    fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drink)
+    .then(function(response){
+        return response.json()
+    })
+    .then(function(data){
+        console.log(data)
+        var drinkName = data.drinks[0].strDrink
+        var drinkImg = data.drinks[0].strDrinkThumb
+        var recipeInstructions = data.drinks[0].strInstructions
+        drinkNameEl.text(drinkName)
+        drinkImgEl.attr("src", drinkImg)
+        recipeText.text(recipeInstructions)
+        console.log(drinkName)
+    })
+}
