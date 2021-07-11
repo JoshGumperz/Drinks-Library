@@ -9,13 +9,14 @@ $( document ).ready(function() {
     $(".dropdown-trigger").dropdown();
 });
 
+var ingredientsArr = []
 
 searchDrink.on("submit", function(event){
     event.preventDefault()
     infoDisplay.css("display", "block")
     var drink = drinkInput.val()
     getCockTail(drink)
-    getNutritionInfo(drink)
+    getNutritionInfo()
 })
 
 var occasions = [
@@ -74,29 +75,32 @@ function getCockTail(drink) {
         var drinkName = data.drinks[0].strDrink
         var drinkImg = data.drinks[0].strDrinkThumb
         var recipeInstructions = data.drinks[0].strInstructions
+        getIngredientListForDrink(data)
         drinkNameEl.text(drinkName)
         drinkImgEl.attr("src", drinkImg)
         recipeText.text(recipeInstructions)
-        console.log(drinkName)
+        // console.log(drinkName)
         setTimeout(() => {
             scrollDown()
-        }, 150);
+        }, 150);    
     })
 }
 
 
-function getNutritionInfo(drink) {
-    fetch("https://cors.bridged.cc/https://nutrition-api.esha.com/foods?query=" + drink + "&0&10&true", {
-    headers: {
-        "Ocp-Apim-Subscription-Key": "951b42ae2f4a4413a3d54640205f22c5"
+function getNutritionInfo() {
+    for (var i = 0; i < ingredientsArr.length; i++) {
+        fetch("https://cors.bridged.cc/https://nutrition-api.esha.com/foods?query=" + ingredientsArr[i] + "&0&10&true", {
+        headers: {
+            "Ocp-Apim-Subscription-Key": "951b42ae2f4a4413a3d54640205f22c5"
+        }
+        })
+        .then(function(response) {
+            return response.json()
+        })
+        .then(function(data){
+            console.log(data)
+        })
     }
-    })
-    .then(function(response) {
-        return response.json()
-    })
-    .then(function(data){
-        console.log(data)
-    })
 }
 
 var drink;
@@ -132,7 +136,7 @@ function getDrinksByCategories( categories ) {
             return response.json();
         })
         .then( function( data ) {
-            console.log( data );
+            // console.log( data );
             for( var each of data.drinks) {
                 getCockTailRecipeByID( each.idDrink );
             }
@@ -174,7 +178,22 @@ function displayDrinkData( ) {
     // console.log( btnEl.textContent );
 
     var btnEl = $( '#1' ).children('button');
-    console.log( btnEl.text() );
+    // console.log( btnEl.text() );
     drinksDisplayedSoFar++;
 
 }
+
+function getIngredientListForDrink( drink ) {
+    var ingredientIdx = 1;
+    var done = false;
+    var ingredientKey = "strIngredient" + ingredientIdx;
+    // console.log( drink[ "strIngredient" + ingredientIdx ] );
+    console.log(drink.drinks)
+    while(  drink.drinks[0][ "strIngredient" + ingredientIdx ] != null ) {
+        ingredientsArr.push( drink.drinks[0][ "strIngredient" + ingredientIdx ] );
+        ingredientIdx++;
+        ingredientKey = "strIngredient" + ingredientIdx ;
+    }
+    console.log( ingredientsArr );
+}
+    
