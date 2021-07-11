@@ -72,24 +72,34 @@
     
     <div class="columns is-centered">
       <div class="column drinkName-container">
+        <div class="columns drink-name-columns">
+          <div class="column is-one-quarter drinkNameColumn" id="1">
+            <p>column1</p>
+          </div>
+          <div class="column is-one-quarter drinkNameColumn" id="2">
+            <p>column2</p>
+          </div>
+          <div class="column is-one-quarter drinkNameColumn" id="3">
+            <p>column3</p>
+          </div>
+          <div class="column is-one-quarter drinkNameColumn" id="4">
+            <p>column4</p>
+          </div>
+        </div>
         <article class="message is-dark">
           <div class="message-header">
             <p id="cocktail-name">Cocktail Name</p>
           </div>
-          <div class="message-body content-body columns">
-            <div class="column is-one-quarter"><img id="cocktail-img" src="https://via.placeholder.com/150"></div>
-            <div class="column">
-              <div class="rows">
-                <div class="nutritional-info row">
-                  <h3>Nutritional Information:</h3>
-                  <h4 id="ingredients-header">Ingredients:</h4>
-                  <ul id="ingredients-list"></ul>              
-                </div>
-              </div>
-              <div class="recipe-info row">
-                <h3>Recipe:</h3>
-                <p id="recipe-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum efficitur. Aenean ac, in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.</p>
-              </div>
+          <div class="message-body content-body">
+            <img id="cocktail-img" src="https://via.placeholder.com/150">
+            <div class="nutritional-info">
+              <h3>Nutritional Information:</h3>
+              <h4 id="ingredients-header">Ingredients:</h4>
+              <div id="ingredients-list"></div>          
+            </div>
+            <div class="recipe-info">
+              <h3>Recipe:</h3>
+              <p id="recipe-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum efficitur. Aenean ac, in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.</p>
             </div>
           </div>
         </article>
