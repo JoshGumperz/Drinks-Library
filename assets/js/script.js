@@ -2,7 +2,8 @@ var searchDrink = $(".search-form")
 var drinkInput = $(".search-bar")
 var drinkNameEl = $("#cocktail-name")
 var drinkImgEl = $("#cocktail-img")
-var NutritionInfo = $("#nutrition-text")
+var NutritionInfo = $(".nutritional-info")
+var ingredientsList = $("#ingredients-list")
 var recipeText = $("#recipe-text")
 var infoDisplay = $(".message")
 $( document ).ready(function() {
@@ -16,7 +17,9 @@ searchDrink.on("submit", function(event){
     infoDisplay.css("display", "block")
     var drink = drinkInput.val()
     getCockTail(drink)
-    getNutritionInfo()
+    setTimeout(() => {
+        getNutritionInfo()
+    }, 500);
 })
 
 var occasions = [
@@ -71,7 +74,7 @@ function getCockTail(drink) {
         return response.json()
     })
     .then(function(data){
-        console.log(data)
+        // console.log(data)
         var drinkName = data.drinks[0].strDrink
         var drinkImg = data.drinks[0].strDrinkThumb
         var recipeInstructions = data.drinks[0].strInstructions
@@ -84,11 +87,11 @@ function getCockTail(drink) {
             scrollDown()
         }, 150);    
     })
-}
+}                                                                           
 
 
 function getNutritionInfo() {
-    for (var i = 0; i < ingredientsArr.length; i++) {
+    for (let i = 0; i < ingredientsArr.length; i++) {
         fetch("https://cors.bridged.cc/https://nutrition-api.esha.com/foods?query=" + ingredientsArr[i] + "&0&10&true", {
         headers: {
             "Ocp-Apim-Subscription-Key": "951b42ae2f4a4413a3d54640205f22c5"
@@ -99,8 +102,16 @@ function getNutritionInfo() {
         })
         .then(function(data){
             console.log(data)
+            var displayIngredients = data.query
+            ingredientsList.append($("<li>").text(displayIngredients))
+            // console.log(data.items[0].description)
         })
     }
+    clearNutritionInfo()
+}
+
+function clearNutritionInfo(){
+    ingredientsList.empty()
 }
 
 var drink;
@@ -184,16 +195,17 @@ function displayDrinkData( ) {
 }
 
 function getIngredientListForDrink( drink ) {
+    ingredientsArr = []
     var ingredientIdx = 1;
     var done = false;
     var ingredientKey = "strIngredient" + ingredientIdx;
     // console.log( drink[ "strIngredient" + ingredientIdx ] );
-    console.log(drink.drinks)
+    // console.log(drink.drinks)
     while(  drink.drinks[0][ "strIngredient" + ingredientIdx ] != null ) {
         ingredientsArr.push( drink.drinks[0][ "strIngredient" + ingredientIdx ] );
         ingredientIdx++;
         ingredientKey = "strIngredient" + ingredientIdx ;
     }
-    console.log( ingredientsArr );
+    // console.log( ingredientsArr );
 }
     
