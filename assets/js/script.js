@@ -1,3 +1,104 @@
+
+var searchDrink = $(".search-form")
+var drinkInput = $(".search-bar")
+var drinkNameEl = $("#cocktail-name")
+var drinkImgEl = $("#cocktail-img")
+var NutritionInfo = $(".nutritional-info")
+var ingredientsList = $("#ingredients-list")
+var recipeText = $("#recipe-text")
+var infoDisplay = $(".message")
+
+
+$( document ).ready(function() {
+    $(".dropdown-trigger").dropdown();
+});
+
+
+var ingredientsArr = [];
+
+
+searchDrink.on("submit", function(event){
+    event.preventDefault()
+    infoDisplay.css("display", "block")
+    var drink = drinkInput.val()
+    getCockTail(drink)
+    setTimeout(() => {
+        getNutritionInfo()
+    }, 3000);
+})
+
+function scrollDown() {
+    // For some reason scrollIntoView wasn't working when I tried selecting the "bottom" element with jQuery, so I had to use vanilla javascript
+    document.getElementById("bottom").scrollIntoView();
+};
+
+
+function getCockTail(drink) {
+    fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drink)
+    .then(function(response){
+        return response.json()
+    })
+    .then(function(data){
+        // console.log(data)
+        var drinkName = data.drinks[0].strDrink
+        var drinkImg = data.drinks[0].strDrinkThumb
+        var recipeInstructions = data.drinks[0].strInstructions
+        getIngredientListForDrink(data)
+        drinkNameEl.text(drinkName)
+        drinkImgEl.attr("src", drinkImg)
+        recipeText.text(recipeInstructions)
+        // console.log(drinkName)
+        setTimeout(() => {
+            scrollDown()
+        }, 150);    
+    })
+}   
+
+
+function getNutritionInfo() {
+    console.log( ingredientsArr );
+    for (let i = 0; i < ingredientsArr.length; i++) {
+        fetch("https://cors.bridged.cc/https://nutrition-api.esha.com/foods?query=" + ingredientsArr[i] + "&0&10&true", {
+        headers: {
+            "Ocp-Apim-Subscription-Key": "951b42ae2f4a4413a3d54640205f22c5"
+        }
+        })
+        .then(function(response) {
+            return response.json()
+        })
+        .then(function(data){
+            console.log(data);
+            var displayIngredients = data.query
+            ingredientsList.append($("<li>").text(displayIngredients))
+            // console.log(data.items[0].description)
+        })
+    }
+    clearNutritionInfo()
+}
+
+function clearNutritionInfo(){
+    ingredientsList.empty()
+}
+
+
+function getIngredientListForDrink( drink ) {
+
+    ingredientsArr = []
+    var ingredientIdx = 1;
+    var done = false;
+    var ingredientKey = "strIngredient" + ingredientIdx;
+    // console.log( drink[ "strIngredient" + ingredientIdx ] );
+    // console.log(drink.drinks)
+    while(  drink.drinks[0][ "strIngredient" + ingredientIdx ] != null ) {
+        ingredientsArr.push( drink.drinks[0][ "strIngredient" + ingredientIdx ] );
+        ingredientIdx++;
+        ingredientKey = "strIngredient" + ingredientIdx ;
+    }
+    // console.log( ingredientsArr );
+}
+
+
+
 var occasions = [
     FormalParty = { 
         description : "Formal Party",
@@ -38,109 +139,55 @@ var occasions = [
 ]
 
 
-// getCategories();
-// getCockTail();
-// getDrinksByOccasions();
-
-
-
-// function getDrinksByOccasions() {
-//     // for( var occasion of occasions ) {
-//     //     for( var category of occasion.categories ) {
-//     //         getDrinksByOccasionsHelper( category );
-//     //     }
-//     // }
-//     var drinkNameEl = $('<h2>' );
-//     drinkNameEl.text( "Occasion: " + occasions[0].description );
-//     $( '.drinkName-container' ).append( drinkNameEl );
-//     for( var category of occasions[0].categories ) {
-//         getDrinksByOccasionsHelper( category );
-//     }
-// }
-
-// function getDrinksByOccasionsHelper( category ) {
-//     fetch( "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + category )
-//     .then( function ( response ) {
-//         return response.json();
-//     })
-//     .then( function( data ) {
-//         // console.log( data );
-//         for( var each of data.drinks ) {
-//             displayRecipe( each );
-//         }
-//         return data;
-//     })
-// }
-
-
-// function displayRecipe( drink ) {
-//     var drinkNameEl = $( '<h3>' );
-//     drinkNameEl.text( drink.strDrink );
-//     $('.drinkName-container').append( drinkNameEl );
-
-//     var drinkID = drink.idDrink;
-//     return getCockTailRecipeByID( drinkID );
-// }
-
-
-// function getNutritionInfo() {
-//     fetch("https://cors.bridged.cc/https://nutrition-api.esha.com/foods?query=" + drink + "&0&10&true", {
-//     headers: {
-//         "Ocp-Apim-Subscription-Key": "951b42ae2f4a4413a3d54640205f22c5"
-//     }
-//     })
-//     .then(function(response) {
-//         return response.json()
-//     })
-//     .then(function(data){
-//         console.log(data)
-//     })
-// }
-
-
-
-// For testing purposes
-// function getCategories() {
-//     fetch( "https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list" )
-//     .then( function( response ) {
-//         return response.json();
-//     })
-//     .then( function( data ) {
-//         console.log( data );
-//     })
-// }
-
-
 var drink;
 var drinksDisplayedSoFar = 0;
 var drinksArr = [];
 localStorage.setItem( "drinksArr", JSON.stringify( drinksArr ) );
-var ingredientsArr = [];
 
-var inputOccasions = [ "Formal Party" ];
+
+var inputOccasions = [ ];
 var recipesData = [];
 var recipesDisplayed = 0;
 
 
 
 
-handleUserInputOccasions();
-setTimeout( function() { displayDrinkData() }, 3000 );
+// handleUserInputOccasions();
+// setTimeout( function() { displayDrinkData() }, 1000 );
     
-    
+// Initializes the web application by waiting for the user to select types of events
+// Calls handleUserInputOccasions() to collect the info on the drinks that fit into the selected events
+// Calls displayDrinkData() to display the drink info returned by the API calls on the browser window, one at a time
+function init() {
+    $("#submit-occasions-btn").click( function() {
+        $( document ).ready( function() {
+            $.each( $( "input[name='event']:checked" ), function() {
+                // console.log( $( this ).val() );
+                inputOccasions.push( $( this ).val() );
+            });
+            // console.log( inputOccasions );
+            handleUserInputOccasions();
+            setTimeout( function() { displayDrinkData() }, 1000 );
+        });        
+    });   
+}
 
-$( '.nextThree' ).on( 'click', displayDrinkData );
+// Calls the init() function
+init();
 
 
-// console.log( recipesData );
+// Event listener for nextBtn which displays info of the next drink when clicked
+$( '.nextBtn' ).on( 'click', displayDrinkData );
 
 
-async function handleUserInputOccasions() {
+// For each occasion that the user selected, finds its matching object in the occasions 
+// Passes the categories associated with each occasion selected to the getDrinksByCategories function
+// to get all the drinks in those categories
+function handleUserInputOccasions() {
     for( var each of inputOccasions ) {
         for( var j of occasions ) {
             if( each === j.description ) {
-                await getDrinksByCategories( j.categories );
-                // main( j.categories );
+                getDrinksByCategories( j.categories );
             }
         }
     }
@@ -148,24 +195,14 @@ async function handleUserInputOccasions() {
 }
 
 
-// async function main( categories ) {
-//     for( var category of categories ) {
-//         const res = await fetch( "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + category );
-//         var data = res.body;
-//         console.log( data );
-//         console.log( data[2] );
-//         for( var each of data.PromiseResult.drinks ) {
-//             getCockTailRecipeByID( each.idDrink );
-//         }
-//     }
-// }
 
-
-
-
-async function getDrinksByCategories( categories ) {
+// Takes an array of categoris as input
+// For each element/category of the input arr, make an API call with that element/category as the query string
+// API call returns an array of drinks for a category.
+// For each element/drink in the array returned by the API call, call getCockTailRecipeByID to get fuller details about the drink.
+function getDrinksByCategories( categories ) {
     for( var category of categories ) {
-        await fetch( "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + category )
+        fetch( "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + category )
         .then( function ( response ) {
             return response.json();
         })
@@ -178,15 +215,16 @@ async function getDrinksByCategories( categories ) {
     }
 }
 
-
-async function getCockTailRecipeByID( id ) {
-    await fetch("https://cors.bridged.cc/http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + id )
+// Takes a drink ID as input and make an API call with that ID as the query string
+// The API call returns an object containing full detail of that drink ID
+// Pushes the object return by the API call onto the drinksArr array
+function getCockTailRecipeByID( id ) {
+    fetch("https://cors.bridged.cc/http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + id )
     .then(function(response) {
         return response.json()
     })
     .then(function( data ){
         // console.log( data );
-        // storeData( data );
         drinksArr.push( data.drinks );
     })
     // .then( function () {
@@ -195,79 +233,48 @@ async function getCockTailRecipeByID( id ) {
 }
 
 
-function storeData( data ) {
-    var drinksArr = JSON.parse( localStorage.getItem( "drinksArr" ) );
-    drinksArr.push( data.drinks[0] );
-    // console.log( drinksArr );
-    localStorage.setItem( "drinksArr", JSON.stringify( drinksArr ) );
-}
-
-
+// For each element/drink of the drinksArr array, displays its name, thumbnail, and mixing instruction,
+// and ingredient list in the browser window
+// When displaying the ingredient list, call the displayDrinkDataHelper function with each element/drink of the drinksArr as argument
+// to get the ingredient list as an array
+// Uses the ingredient list array as argument and calls the getNutritionInfo() to get the nutritional information
 function displayDrinkData( ) {
-    // var drinksArr = JSON.parse( localStorage.getItem( "drinksArr" ) );
+
     // console.log( drinksArr );
 
-    clearDisplay();
+    $( '.message' ).css( "display", "block")
+    $( '.nextBtn' ).css( "display", "block" );
 
-    for( var i = 1; i < 4; i++ ) {
+    var drink = drinksArr[ drinksDisplayedSoFar ];
 
-        var recipeEl = $( '#' + i );
+    drinkNameEl.text(drink[0].strDrink );
+    drinkImgEl.attr( "src", drink[0].strDrinkThumb );
+    recipeText.text( drink[0].strInstructions );
 
-        var drink = drinksArr[ drinksDisplayedSoFar ];
-        var drinkName = drink[0].strDrink;
-        var btnEl = recipeEl.children( 'button' );
-        btnEl.text( drinkName );
+    displayDrinkDataHelper( drink );
+    getNutritionInfo();
 
-        var detailEl = $( '<p>' );
-        detailEl.text( drink[0].strInstructions );
-        recipeEl.append( detailEl );
-
-        drinksDisplayedSoFar++;
-    } 
+    drinksDisplayedSoFar++;
 }
 
-function clearDisplay() {
 
-    for( var i = 1; i < 4; i++ ) {
-       $( '#' + i ).children( 'button' ).text(''); 
-       $( '#' + i ).children( 'p' ).text('');
+
+// Takes a drink object as input
+// Pushes the ingredients of the input drink object onto an array called ingredientsArr
+// ingredientsArr is later used as input to retrieve nutritional info for each of its elements
+function displayDrinkDataHelper( drink ) {
+
+    ingredientsArr = []
+    var ingredientIdx = 1;
+    var done = false;
+    var ingredientKey = "strIngredient" + ingredientIdx;
+    // console.log( drink[ "strIngredient" + ingredientIdx ] );
+    // console.log(drink.drinks)
+    while(  drink[0][ "strIngredient" + ingredientIdx ] != null ) {
+        ingredientsArr.push( drink[0][ "strIngredient" + ingredientIdx ] );
+        ingredientIdx++;
+        ingredientKey = "strIngredient" + ingredientIdx;
     }
+    // console.log( ingredientsArr );
 }
 
-
-// function collectRecipeInfo( drink ) {
-//     var ingredientIdx = 1;
-//     var done = false;
-//     var ingredientKey = "strIngredient" + ingredientIdx;
-//     // console.log( drink[ "strIngredient" + ingredientIdx ] );
-
-//     while(  drink[ "strIngredient" + ingredientIdx ] != null ) {
-//         ingredientsArr.push( drink[ "strIngredient" + ingredientIdx ] );
-//         ingredientIdx++;
-//         ingredientKey = "strIngredient" + ingredientIdx ;
-//     }
-//     // console.log( ingredientsArr );
-
-
-
-// }
-
-
-
-// For when the user directly search a drink
-function getCockTail(drink) {
-    fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drink)
-    .then(function(response){
-        return response.json()
-    })
-    .then(function(data){
-        console.log(data)
-        var drinkName = data.drinks[0].strDrink
-        var drinkImg = data.drinks[0].strDrinkThumb
-        var recipeInstructions = data.drinks[0].strInstructions
-        drinkNameEl.text(drinkName)
-        drinkImgEl.attr("src", drinkImg)
-        recipeText.text(recipeInstructions)
-        console.log(drinkName)
-    })
-}
