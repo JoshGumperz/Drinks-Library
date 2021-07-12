@@ -18,54 +18,57 @@
         </a>
       </div>
 
-      <div class="navbar-item has-dropdown is-hoverable occasion-selector">
-        <a class="navbar-link">
-          Get Drink Recommendations
-        </a>
-    
-        <div class="navbar-dropdown">
-          <div id="dropdown-explanation-text" class="navbar-item">
-            Select event types that best suit your needs
-          </div>
-          <ul class="dropdown-items">
-            <li>
+      <div class="dropdown is-hoverable occasion-selector">
+        <div class="dropdown-trigger">
+          <button class="button" aria-haspopup="true" id="occasionsDropdown" aria-controls="dropdown-menu">
+            <span>get drink recommendations</span>
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+          <div class="dropdown-content">
+            <li class="dropdown-item">
               <label><input type="checkbox" value="0" name="event">Formal Party</label>
             </li>
-            <li>
+            <li class="dropdown-item">
               <label><input type="checkbox" value="1" name="event">Graduation</label>
             </li>
-            <li>
+            <li class="dropdown-item">
               <label><input type="checkbox" value="2" name="event">Promotion</label>
             </li>
-            <li>
+            <li class="dropdown-item">
               <label><input type="checkbox" value="3" name="event">Birthday</label>
             </li>
-            <li>
+            <li class="dropdown-item">
               <label><input type="checkbox" value="4" name="event">Anniversary</label>
             </li>
-            <li>
+            <li class="dropdown-item">
               <label><input type="checkbox" value="5" name="event">Informal Party</label>
             </li>
-            <li>
+            <li class="dropdown-item">
               <label><input type="checkbox" value="6" name="event">Holiday Party</label>
             </li>
-            <li>
+            <li class="dropdown-item">
               <label><input type="checkbox" value="7" name="event">Movie Night</label>
             </li>
-            <li>
+            <li class="dropdown-item">
               <label><input type="checkbox" value="8" name="event">Tropical</label>
             </li>
-            <li>
+            <li class="dropdown-item">
               <label><input type="checkbox" value="9" name="event">Relaxing</label>
             </li>
-          </ul>
-          <button type="button" id="submit-occasions-btn">Find Drinks</button>
+            <button type="button" id="submit-occasions-btn">Find Drinks</button>
+          </div>
+          
         </div>
       </div>
 
+
       <form class="search-form">
         <input class="input is-normal search-bar" type="text" placeholder="Search">
-        <button type="submit" id="submit-btn">submit</button>
+        <button type="submit" id="submit-btn">Submit</button>
       </form>
     </nav>
   </header>
@@ -95,7 +98,7 @@
       </div>
 
       <div class="column is-2 is-flex is-vcentered nextBtn-container">
-        <button class="button  nextBtn">
+        <button id="next-btn" class="button nextBtn">
           <span class="icon">
             <i class="fas fa-arrow-right"></i>
           </span>

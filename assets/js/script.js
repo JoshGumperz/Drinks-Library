@@ -29,14 +29,16 @@ function scrollDown() {
 function checkTime() {
     currentHour = currentTime.c.hour
     if (currentHour < 17) {
-        $(".navbar").css("background-color", "#ff949a")
-        $("header").css("background-color", "#ff949a")
-        $(".message-header").css("background-color", "#ff949a")
+        $(".navbar").css("background-color", "#ff646b")
+        $("header").css("background-color", "#ff646b")
+        $(".message-header").css("background-color", "#ff646b")
+        $("#occasionsDropdown").css("background-color", "#ff646b")
     }
     else {
-        $(".navbar").css("background-color", "#86dbae")
-        $("header").css("background-color", "#86dbae")
-        $(".message-header").css("background-color", "#86dbae")
+        $(".navbar").css("background-color", "#00be8f")
+        $("header").css("background-color", "#00be8f")
+        $(".message-header").css("background-color", "#00be8f")
+        $("#occasionsDropdown").css("background-color", "#00be8f")
     }
 }
 
@@ -67,7 +69,7 @@ function getNutritionInfo() {
     for (let i = 0; i < ingredientsArr.length; i++) {
         fetch("https://cors.bridged.cc/https://nutrition-api.esha.com/foods?query=" + ingredientsArr[i] + "&0&10&true", {
         headers: {
-            "Ocp-Apim-Subscription-Key": "6b72f14d1f764cf1b81c389072560fed"
+            "Ocp-Apim-Subscription-Key": "951b42ae2f4a4413a3d54640205f22c5"
         }
         })
         .then(function(response) {
@@ -256,7 +258,7 @@ function displayDrinkData( ) {
     recipeText.text( drink[0].strInstructions );
 
     displayDrinkDataHelper( drink );
-    clearNutritionInfo();
+    clearNutritionInfo()
     getNutritionInfo();
 
     drinksDisplayedSoFar++;
