@@ -6,21 +6,9 @@ var NutritionInfo = $(".nutritional-info")
 var ingredientsList = $("#ingredients-list")
 var recipeText = $("#recipe-text")
 var infoDisplay = $(".message")
-$( document ).ready(function() {
-    $(".dropdown-trigger").dropdown();
-});
-
+var DateTime = luxon.DateTime
+var currentTime = DateTime.local()
 var ingredientsArr = []
-
-searchDrink.on("submit", function(event){
-    event.preventDefault()
-    infoDisplay.css("display", "block")
-    var drink = drinkInput.val()
-    getCockTail(drink)
-    setTimeout(() => {
-        getNutritionInfo()
-    }, 500);
-})
 
 var occasions = [
     FormalParty = { 
@@ -60,12 +48,35 @@ var occasions = [
         categories : [ "Ordinary Drink", "Milk / Float / Shake", "Coffee / Tea" ]
     }
 ]
+checkTime()
 
+
+searchDrink.on("submit", function(event){
+    event.preventDefault()
+    infoDisplay.css("display", "block")
+    var drink = drinkInput.val()
+    getCockTail(drink)
+    // setTimeout(() => {
+    //     getNutritionInfo()
+    // }, 500);
+})
 
 function scrollDown() {
     // For some reason scrollIntoView wasn't working when I tried selecting the "bottom" element with jQuery, so I had to use vanilla javascript
-    document.getElementById("bottom").scrollIntoView();
+    document.getElementById("bottom").scrollIntoView({behavior: "smooth"});
 };
+
+function checkTime() {
+    currentHour = currentTime.c.hour
+    if (currentHour < 17) {
+        $(".navbar").css("background-color", "#ff949a")
+        $("header").css("background-color", "#ff949a")
+    }
+    else {
+        $(".navbar").css("background-color", "#86dbae")
+        $("header").css("background-color", "#86dbae")
+    }
+}
 
 
 function getCockTail(drink) {
@@ -86,6 +97,9 @@ function getCockTail(drink) {
         setTimeout(() => {
             scrollDown()
         }, 150);    
+    })
+    .then(function(){
+        getNutritionInfo()
     })
 }                                                                           
 
@@ -123,11 +137,11 @@ var inputOccasions = [ "Formal Party" ];
 var recipesData = [];
 var recipesDisplayed = 0;
 
-handleUserInputOccasions();
+// handleUserInputOccasions();
 // console.log( recipesData );
 
 
-async function handleUserInputOccasions() {
+function handleUserInputOccasions() {
 
     for( var each of inputOccasions ) {
         for( var j of occasions ) {

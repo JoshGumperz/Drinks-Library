@@ -4,13 +4,11 @@ body {
 }
 
 header {
-  background: #212529;
   padding: 20px;
   width: 20;
 }
 
 .navbar{
-  background-color: #212529;
 }
 
 #logo-text {
@@ -38,7 +36,7 @@ header {
   height: 40px;
   margin-left: 5px;
   border-radius: 5px;
-  background-color: #212529;
+  background-color: transparent;
   color: #ffff;
   border: solid 1px #ffff;
   cursor: pointer;
