@@ -9,48 +9,101 @@ header {
   width: 20;
 }
 
-.navbar-brand {
+.navbar {
+  background-color: #212529;
+}
+
+#logo-text {
+  color: #ffff;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.navbar-link {
   color: #ffff;
 }
 
+.occasion-selector {
+  margin: 5px 0px 0px 20px;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: auto;
+}
+
+#submit-btn {
+  height: 40px;
+  margin-left: 5px;
+  border-radius: 5px;
+  background-color: #212529;
+  color: #ffff;
+  border: solid 1px #ffff;
+  cursor: pointer;
+}
+
+#submit-btn:hover {
+  background-color: #ffff;
+  color: black;
+}
+
+/* .navbar-brand {
+  color: #ffff;
+}
 .navbar-brand:hover {
   color: #ffff;
   cursor: pointer;
+}  */
+
+#dropdown-explanation-text {
+  color: rgb(144, 141, 141);
+  font-style: italic;
 }
 
-#navbarDropdown{
-  color: #ffff;
+.drinkNameColumn {
+  display: none;
 }
 
-#navbarDropdown:hover {
-  color: #ffff;
-  cursor: pointer;
-}
-
-.content{
+.message {
   width: 90%;
   margin: auto;
+  margin-top: 50px;
+  display: none;
 }
 
-#cocktail-img {
+#cocktail-name {
+  margin-left: 15px;
+}
+
+.nutritional-info {
   margin-bottom: 10px;
 }
 
-.cocktail-name {
-  margin-bottom: 30px;
+#cocktail-img {
+  margin: 5px 12px 5px 5px;
+  float: left;
 }
 
-ul {
+.message-body h3 {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+#ingredients-header {
+  font-weight: bold;
+}
+
+/* ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-
 li {
   display: inline-block;
   margin-right: 20px;
 }
-
 a {
   width: 10%;
   color: white;
@@ -60,7 +113,7 @@ a {
   border-radius: 1px;
   cursor: pointer;
   text-decoration: none;
-}
+} */
 
 .hero-image {
   background-image: url('../Images/pexels-photo-1128678.jpeg');
@@ -78,4 +131,21 @@ a {
   left: 50%;
   transform: translate(-50%, -50%);
   color: white;
+}
+
+.drinkNameColumn {
+  text-align: center;
+}
+
+.nextBtn-container {
+  /* width: 90%; */
+  margin: auto;
+  margin-top: 50px;
+  display: none;
+}
+
+.nextBtn {
+  padding-top: 40%;
+  padding-bottom: 40%;
+  display: none;
 }
