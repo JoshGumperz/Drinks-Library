@@ -138,3 +138,7 @@ a {
 .drinkNameColumn {
   text-align: center;
 }
+
+.message-header {
+  background-color: #ff949a;
+}

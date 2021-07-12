@@ -71,10 +71,12 @@ function checkTime() {
     if (currentHour < 17) {
         $(".navbar").css("background-color", "#ff949a")
         $("header").css("background-color", "#ff949a")
+        $(".message-header").css("background-color", "#ff949a")
     }
     else {
         $(".navbar").css("background-color", "#86dbae")
         $("header").css("background-color", "#86dbae")
+        $(".message-header").css("background-color", "#86dbae")
     }
 }
 
