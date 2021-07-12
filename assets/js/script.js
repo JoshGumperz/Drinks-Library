@@ -7,14 +7,10 @@ var NutritionInfo = $(".nutritional-info")
 var ingredientsList = $("#ingredients-list")
 var recipeText = $("#recipe-text")
 var infoDisplay = $(".message")
-
-
-$( document ).ready(function() {
-    $(".dropdown-trigger").dropdown();
-});
-
-
+var DateTime = luxon.DateTime
+var currentTime = DateTime.local()
 var ingredientsArr = [];
+
 
 
 searchDrink.on("submit", function(event){
@@ -24,7 +20,7 @@ searchDrink.on("submit", function(event){
     getCockTail(drink)
     setTimeout(() => {
         getNutritionInfo()
-    }, 3000);
+    }, 500);
 })
 
 function scrollDown() {
@@ -33,8 +29,25 @@ function scrollDown() {
 };
 
 
+function checkTime() {
+    currentHour = currentTime.c.hour
+    if (currentHour < 17) {
+        $(".navbar").css("background-color", "#ff646b")
+        $("header").css("background-color", "#ff646b")
+        $(".message-header").css("background-color", "#ff646b")
+        $("#occasionsDropdown").css("background-color", "#ff646b")
+    }
+    else {
+        $(".navbar").css("background-color", "#00be8f")
+        $("header").css("background-color", "#00be8f")
+        $(".message-header").css("background-color", "#00be8f")
+        $("#occasionsDropdown").css("background-color", "#00be8f")
+    }
+}
+
+
 function getCockTail(drink) {
-    fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drink)
+    fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=" + drink)
     .then(function(response){
         return response.json()
     })
@@ -56,18 +69,17 @@ function getCockTail(drink) {
 
 
 function getNutritionInfo() {
-    console.log( ingredientsArr );
     for (let i = 0; i < ingredientsArr.length; i++) {
         fetch("https://cors.bridged.cc/https://nutrition-api.esha.com/foods?query=" + ingredientsArr[i] + "&0&10&true", {
         headers: {
-            "Ocp-Apim-Subscription-Key": "951b42ae2f4a4413a3d54640205f22c5"
+            "Ocp-Apim-Subscription-Key": "6b72f14d1f764cf1b81c389072560fed"
         }
         })
         .then(function(response) {
             return response.json()
         })
         .then(function(data){
-            console.log(data);
+            // console.log(data);
             var displayIngredients = data.query
             ingredientsList.append($("<li>").text(displayIngredients))
             // console.log(data.items[0].description)
@@ -96,6 +108,7 @@ function getIngredientListForDrink( drink ) {
     }
     // console.log( ingredientsArr );
 }
+
 
 
 
@@ -159,6 +172,7 @@ var recipesDisplayed = 0;
 // Calls handleUserInputOccasions() to collect the info on the drinks that fit into the selected events
 // Calls displayDrinkData() to display the drink info returned by the API calls on the browser window, one at a time
 function init() {
+    checkTime();
     $("#submit-occasions-btn").click( function() {
         $( document ).ready( function() {
             $.each( $( "input[name='event']:checked" ), function() {
@@ -184,14 +198,15 @@ $( '.nextBtn' ).on( 'click', displayDrinkData );
 // Passes the categories associated with each occasion selected to the getDrinksByCategories function
 // to get all the drinks in those categories
 function handleUserInputOccasions() {
-    for( var each of inputOccasions ) {
-        for( var j of occasions ) {
-            if( each === j.description ) {
-                getDrinksByCategories( j.categories );
-            }
-        }
+
+    // var temp;
+    // console.log( temp = inputOccasions[0] );
+    // console.log( occasions[ temp ] );
+
+    for( var i = 0; i < inputOccasions.length; i++ ) {
+        var temp = inputOccasions[i];
+        getDrinksByCategories( occasions[ temp ].categories );
     }
-    
 }
 
 
@@ -202,7 +217,7 @@ function handleUserInputOccasions() {
 // For each element/drink in the array returned by the API call, call getCockTailRecipeByID to get fuller details about the drink.
 function getDrinksByCategories( categories ) {
     for( var category of categories ) {
-        fetch( "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + category )
+        fetch( "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?c=" + category )
         .then( function ( response ) {
             return response.json();
         })
@@ -219,7 +234,7 @@ function getDrinksByCategories( categories ) {
 // The API call returns an object containing full detail of that drink ID
 // Pushes the object return by the API call onto the drinksArr array
 function getCockTailRecipeByID( id ) {
-    fetch("https://cors.bridged.cc/http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + id )
+    fetch("https://cors.bridged.cc/http://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=" + id )
     .then(function(response) {
         return response.json()
     })
@@ -238,7 +253,7 @@ function getCockTailRecipeByID( id ) {
 // When displaying the ingredient list, call the displayDrinkDataHelper function with each element/drink of the drinksArr as argument
 // to get the ingredient list as an array
 // Uses the ingredient list array as argument and calls the getNutritionInfo() to get the nutritional information
-function displayDrinkData( ) {
+function displayDrinkData() {
 
     // console.log( drinksArr );
 

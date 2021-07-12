@@ -4,13 +4,8 @@ body {
 }
 
 header {
-  background: #212529;
   padding: 20px;
-  width: 20;
-}
-
-.navbar {
-  background-color: #212529;
+  width: 100%;
 }
 
 #logo-text {
@@ -24,7 +19,12 @@ header {
 }
 
 .occasion-selector {
-  margin: 5px 0px 0px 20px;
+  margin: 10px 5px 5px 20px;
+}
+
+#occasionsDropdown {
+  color: #ffff !important;
+  border: none;
 }
 
 .search-form {
@@ -38,7 +38,7 @@ header {
   height: 40px;
   margin-left: 5px;
   border-radius: 5px;
-  background-color: #212529;
+  background-color: transparent;
   color: #ffff;
   border: solid 1px #ffff;
   cursor: pointer;
@@ -139,7 +139,10 @@ a {
 
 .nextBtn-container {
   /* width: 90%; */
-  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
   margin-top: 50px;
   display: none;
 }
@@ -148,4 +151,18 @@ a {
   padding-top: 40%;
   padding-bottom: 40%;
   display: none;
+}
+
+@media screen and (max-width: 1000px) {
+  .occasion-selector {
+    margin: 5px 5px 5px 0px;
+  }
+}
+
+@media screen and (max-width: 780px) {
+  #next-btn {
+    width: 25%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
 }
