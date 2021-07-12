@@ -7,14 +7,10 @@ var NutritionInfo = $(".nutritional-info")
 var ingredientsList = $("#ingredients-list")
 var recipeText = $("#recipe-text")
 var infoDisplay = $(".message")
-
-
-// $( document ).ready(function() {
-//     $(".dropdown-trigger").dropdown();
-// });
-
-
+var DateTime = luxon.DateTime
+var currentTime = DateTime.local()
 var ingredientsArr = [];
+
 
 
 searchDrink.on("submit", function(event){
@@ -24,13 +20,30 @@ searchDrink.on("submit", function(event){
     getCockTail(drink)
     setTimeout(() => {
         getNutritionInfo()
-    }, 3000);
+    }, 500);
 })
 
 function scrollDown() {
     // For some reason scrollIntoView wasn't working when I tried selecting the "bottom" element with jQuery, so I had to use vanilla javascript
     document.getElementById("bottom").scrollIntoView();
 };
+
+
+function checkTime() {
+    currentHour = currentTime.c.hour
+    if (currentHour < 17) {
+        $(".navbar").css("background-color", "#ff646b")
+        $("header").css("background-color", "#ff646b")
+        $(".message-header").css("background-color", "#ff646b")
+        $("#occasionsDropdown").css("background-color", "#ff646b")
+    }
+    else {
+        $(".navbar").css("background-color", "#00be8f")
+        $("header").css("background-color", "#00be8f")
+        $(".message-header").css("background-color", "#00be8f")
+        $("#occasionsDropdown").css("background-color", "#00be8f")
+    }
+}
 
 
 function getCockTail(drink) {
@@ -56,7 +69,6 @@ function getCockTail(drink) {
 
 
 function getNutritionInfo() {
-    console.log( ingredientsArr );
     for (let i = 0; i < ingredientsArr.length; i++) {
         fetch("https://cors.bridged.cc/https://nutrition-api.esha.com/foods?query=" + ingredientsArr[i] + "&0&10&true", {
         headers: {
@@ -67,7 +79,7 @@ function getNutritionInfo() {
             return response.json()
         })
         .then(function(data){
-            console.log(data);
+            // console.log(data);
             var displayIngredients = data.query
             ingredientsList.append($("<li>").text(displayIngredients))
             // console.log(data.items[0].description)
@@ -160,6 +172,7 @@ var recipesDisplayed = 0;
 // Calls handleUserInputOccasions() to collect the info on the drinks that fit into the selected events
 // Calls displayDrinkData() to display the drink info returned by the API calls on the browser window, one at a time
 function init() {
+    checkTime();
     $("#submit-occasions-btn").click( function() {
         $( document ).ready( function() {
             $.each( $( "input[name='event']:checked" ), function() {
@@ -226,7 +239,7 @@ function getCockTailRecipeByID( id ) {
         return response.json()
     })
     .then(function( data ){
-        // console.log( data );
+        console.log( data );
         drinksArr.push( data.drinks );
     })
     // .then( function () {

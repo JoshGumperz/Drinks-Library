@@ -11,21 +11,17 @@
 </head>
 <body>
   <header>
-
-    
-    <nav class="navbar columns is-vcentered" role="navigation" aria-label="main navigation">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="#">
           <h1 id="logo-text">Cocktail Database</h1>
         </a>
       </div>
 
-
-
-      <div class="dropdown is-hoverable" id="occasionsDropdown">
+      <div class="dropdown is-hoverable is-mobile occasion-selector">
         <div class="dropdown-trigger">
-          <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-            <span>Dropdown button</span>
+          <button class="button" aria-haspopup="true" id="occasionsDropdown" aria-controls="dropdown-menu">
+            <span>get drink recommendations</span>
             <span class="icon is-small">
               <i class="fas fa-angle-down" aria-hidden="true"></i>
             </span>
@@ -63,10 +59,6 @@
             <li class="dropdown-item">
               <label><input type="checkbox" value="9" name="event">Relaxing</label>
             </li>
-            <!-- <hr class="dropdown-divider">
-            <a href="#" class="dropdown-item">
-              With a divider
-            </a> -->
             <button type="button" id="submit-occasions-btn">Find Drinks</button>
           </div>
           
@@ -74,58 +66,9 @@
       </div>
 
 
-
-
-
-
-      <!-- <div class="navbar-item has-dropdown is-hoverable occasion-selector">
-        <a class="navbar-link">
-          Get Drink Recommendations
-        </a>
-        <div class="navbar-dropdown">
-          <div id="dropdown-explanation-text" class="navbar-item">
-            Select event types that best suit your needs
-          </div>
-            <ul class="dropdown-items">
-              <li>
-                <label><input type="checkbox" value="0" name="event">Formal Party</label>
-              </li>
-              <li>
-                <label><input type="checkbox" value="1" name="event">Graduation</label>
-              </li>
-              <li>
-                <label><input type="checkbox" value="2" name="event">Promotion</label>
-              </li>
-              <li>
-                <label><input type="checkbox" value="3" name="event">Birthday</label>
-              </li>
-              <li>
-                <label><input type="checkbox" value="4" name="event">Anniversary</label>
-              </li>
-              <li>
-                <label><input type="checkbox" value="5" name="event">Informal Party</label>
-              </li>
-              <li>
-                <label><input type="checkbox" value="6" name="event">Holiday Party</label>
-              </li>
-              <li>
-                <label><input type="checkbox" value="7" name="event">Movie Night</label>
-              </li>
-              <li>
-                <label><input type="checkbox" value="8" name="event">Tropical</label>
-              </li>
-              <li>
-                <label><input type="checkbox" value="9" name="event">Relaxing</label>
-              </li>  
-            </ul>
-            <button type="button" id="submit-occasions-btn">Find Drinks</button>
-         
-        </div>
-      </div> -->
-
       <form class="search-form">
         <input class="input is-normal search-bar" type="text" placeholder="Search">
-        <button type="submit" id="submit-btn">submit</button>
+        <button type="submit" id="submit-btn">Submit</button>
       </form>
     </nav>
   </header>
@@ -135,7 +78,7 @@
     <div class="columns is-centered">
 
       <div class="column drinkName-container">
-        <article class="message is-dark">
+        <article class="message">
           <div class="message-header">
             <p id="cocktail-name">Cocktail Name</p>
           </div>
@@ -154,24 +97,19 @@
         </article>
       </div>
 
-      <div class="column is-2">
-        <div class="rows">
-          <div class="row nextBtn-container">
-            <button class="button is-offset-one-fifth nextBtn">
-              <span class="icon">
-                <i class="fas fa-arrow-right"></i>
-              </span>
-            </button>
-          </div>
-        </div>
+      <div class="column is-2 is-flex is-vcentered nextBtn-container">
+        <button id="next-btn" class="button nextBtn">
+          <span class="icon">
+            <i class="fas fa-arrow-right"></i>
+          </span>
+        </button>
       </div>
-      
 
     </div>
 
     <div id="bottom"></div>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/1.21.0/luxon.js" integrity="sha512-pIxTM4VW3VTouLYOQxDihDN2llVCLlS58y7W805Dz98oGz9bDJyMgzKLCpaDVksB9HmB4j+/jx7ZlJE5B8Uxqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="assets/js/script.js"></script>
 </html>
