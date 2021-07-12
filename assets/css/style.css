@@ -8,9 +8,6 @@ header {
   width: 20;
 }
 
-.navbar{
-}
-
 #logo-text {
   color: #ffff;
   font-size: 25px;
@@ -50,7 +47,6 @@ header {
 /* .navbar-brand {
   color: #ffff;
 }
-
 .navbar-brand:hover {
   color: #ffff;
   cursor: pointer;
@@ -94,18 +90,15 @@ header {
   font-weight: bold;
 }
 
-
 /* ul {
   margin: 0;
   padding: 0;
   list-style-type: none;
 }
-
 li {
   display: inline-block;
   margin-right: 20px;
 }
-
 a {
   width: 10%;
   color: white;
@@ -137,4 +130,17 @@ a {
 
 .drinkNameColumn {
   text-align: center;
+}
+
+.nextBtn-container {
+  /* width: 90%; */
+  margin: auto;
+  margin-top: 50px;
+  display: none;
+}
+
+.nextBtn {
+  padding-top: 40%;
+  padding-bottom: 40%;
+  display: none;
 }

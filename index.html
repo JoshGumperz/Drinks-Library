@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="assets/css/reset.css"></link>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
     <title>Cocktail Database</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://kit.fontawesome.com/295989e1d7.js" crossorigin="anonymous"></script>
 </head>
 <body>
   <header>
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <a class="navbar-item">
+        <a class="navbar-item" href="#">
           <h1 id="logo-text">Cocktail Database</h1>
         </a>
       </div>
@@ -29,49 +29,51 @@
           </div>
           <ul class="dropdown-items">
             <li>
-              <label class="checkbox"><input type="checkbox">Formal Party</label>
+              <label><input type="checkbox" value="0" name="event">Formal Party</label>
             </li>
             <li>
-              <label class="checkbox"><input type="checkbox">Graduation</label>
+              <label><input type="checkbox" value="1" name="event">Graduation</label>
             </li>
             <li>
-              <label class="checkbox"><input type="checkbox">Promotion</label>
+              <label><input type="checkbox" value="2" name="event">Promotion</label>
             </li>
             <li>
-              <label class="checkbox"><input type="checkbox">Birthday</label>
+              <label><input type="checkbox" value="3" name="event">Birthday</label>
             </li>
             <li>
-              <label class="checkbox"><input type="checkbox">Anniversary</label>
+              <label><input type="checkbox" value="4" name="event">Anniversary</label>
             </li>
             <li>
-              <label class="checkbox"><input type="checkbox">Informal Party</label>
+              <label><input type="checkbox" value="5" name="event">Informal Party</label>
             </li>
             <li>
-              <label class="checkbox"><input type="checkbox">Holiday Party</label>
+              <label><input type="checkbox" value="6" name="event">Holiday Party</label>
             </li>
             <li>
-              <label class="checkbox"><input type="checkbox">Movie Night</label>
+              <label><input type="checkbox" value="7" name="event">Movie Night</label>
             </li>
             <li>
-              <label class="checkbox"><input type="checkbox">Tropical</label>
+              <label><input type="checkbox" value="8" name="event">Tropical</label>
             </li>
             <li>
-              <label class="checkbox"><input type="checkbox">Relaxing</label>
+              <label><input type="checkbox" value="9" name="event">Relaxing</label>
             </li>
           </ul>
+          <button type="button" id="submit-occasions-btn">Find Drinks</button>
         </div>
       </div>
 
       <form class="search-form">
         <input class="input is-normal search-bar" type="text" placeholder="Search">
-        <button type="submit" href="#bottom" id="submit-btn">Submit</button>
+        <button type="submit" id="submit-btn">submit</button>
       </form>
     </nav>
   </header>
     <div class="hero-image">
     </div>
-    
+
     <div class="columns is-centered">
+
       <div class="column drinkName-container">
         <article class="message">
           <div class="message-header">
@@ -79,20 +81,30 @@
           </div>
           <div class="message-body content-body">
             <img id="cocktail-img" src="https://via.placeholder.com/150">
+            <div class="nutritional-info">
+              <h3>Nutritional Information:</h3>
+              <h4 id="ingredients-header">Ingredients:</h4>
+              <div id="ingredients-list"></div>  
+            </div>
             <div class="recipe-info">
               <h3>Recipe:</h3>
               <p id="recipe-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum efficitur. Aenean ac, in mollis lectus. Donec sodales, arcu et sollicitudin porttitor, tortor urna tempor ligula, id porttitor mi magna a neque. Donec dui urna, vehicula et sem eget, facilisis sodales sem.</p>
             </div>
-            <div class="nutritional-info">
-              <h3>Nutritional Information:</h3>
-              <h4 id="ingredients-header">Ingredients:</h4>
-              <div id="ingredients-list"></div>          
-            </div>
           </div>
         </article>
       </div>
+
+      <div class="column is-2 is-flex is-vcentered nextBtn-container">
+        <button class="button  nextBtn">
+          <span class="icon">
+            <i class="fas fa-arrow-right"></i>
+          </span>
+        </button>
+      </div>
+
     </div>
-    <a id="bottom"></a>
+
+    <div id="bottom"></div>
 </body>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/luxon/1.21.0/luxon.js" integrity="sha512-pIxTM4VW3VTouLYOQxDihDN2llVCLlS58y7W805Dz98oGz9bDJyMgzKLCpaDVksB9HmB4j+/jx7ZlJE5B8Uxqg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
