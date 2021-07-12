@@ -47,7 +47,7 @@ function checkTime() {
 
 
 function getCockTail(drink) {
-    fetch("https://www.thecocktaildb.com/api/json/v1/1/search.php?s=" + drink)
+    fetch("https://www.thecocktaildb.com/api/json/v2/9973533/search.php?s=" + drink)
     .then(function(response){
         return response.json()
     })
@@ -217,7 +217,7 @@ function handleUserInputOccasions() {
 // For each element/drink in the array returned by the API call, call getCockTailRecipeByID to get fuller details about the drink.
 function getDrinksByCategories( categories ) {
     for( var category of categories ) {
-        fetch( "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=" + category )
+        fetch( "https://www.thecocktaildb.com/api/json/v2/9973533/filter.php?c=" + category )
         .then( function ( response ) {
             return response.json();
         })
@@ -234,12 +234,12 @@ function getDrinksByCategories( categories ) {
 // The API call returns an object containing full detail of that drink ID
 // Pushes the object return by the API call onto the drinksArr array
 function getCockTailRecipeByID( id ) {
-    fetch("https://cors.bridged.cc/http://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=" + id )
+    fetch("https://cors.bridged.cc/http://www.thecocktaildb.com/api/json/v2/9973533/lookup.php?i=" + id )
     .then(function(response) {
         return response.json()
     })
     .then(function( data ){
-        console.log( data );
+        // console.log( data );
         drinksArr.push( data.drinks );
     })
     // .then( function () {
