@@ -9,9 +9,9 @@ var recipeText = $("#recipe-text")
 var infoDisplay = $(".message")
 
 
-$( document ).ready(function() {
-    $(".dropdown-trigger").dropdown();
-});
+// $( document ).ready(function() {
+//     $(".dropdown-trigger").dropdown();
+// });
 
 
 var ingredientsArr = [];
@@ -60,7 +60,7 @@ function getNutritionInfo() {
     for (let i = 0; i < ingredientsArr.length; i++) {
         fetch("https://cors.bridged.cc/https://nutrition-api.esha.com/foods?query=" + ingredientsArr[i] + "&0&10&true", {
         headers: {
-            "Ocp-Apim-Subscription-Key": "951b42ae2f4a4413a3d54640205f22c5"
+            "Ocp-Apim-Subscription-Key": "6b72f14d1f764cf1b81c389072560fed"
         }
         })
         .then(function(response) {
@@ -96,6 +96,7 @@ function getIngredientListForDrink( drink ) {
     }
     // console.log( ingredientsArr );
 }
+
 
 
 
@@ -184,14 +185,15 @@ $( '.nextBtn' ).on( 'click', displayDrinkData );
 // Passes the categories associated with each occasion selected to the getDrinksByCategories function
 // to get all the drinks in those categories
 function handleUserInputOccasions() {
-    for( var each of inputOccasions ) {
-        for( var j of occasions ) {
-            if( each === j.description ) {
-                getDrinksByCategories( j.categories );
-            }
-        }
+
+    // var temp;
+    // console.log( temp = inputOccasions[0] );
+    // console.log( occasions[ temp ] );
+
+    for( var i = 0; i < inputOccasions.length; i++ ) {
+        var temp = inputOccasions[i];
+        getDrinksByCategories( occasions[ temp ].categories );
     }
-    
 }
 
 
@@ -238,7 +240,7 @@ function getCockTailRecipeByID( id ) {
 // When displaying the ingredient list, call the displayDrinkDataHelper function with each element/drink of the drinksArr as argument
 // to get the ingredient list as an array
 // Uses the ingredient list array as argument and calls the getNutritionInfo() to get the nutritional information
-function displayDrinkData( ) {
+function displayDrinkData() {
 
     // console.log( drinksArr );
 

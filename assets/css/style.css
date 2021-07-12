@@ -5,7 +5,7 @@ body {
 
 header {
   background: #212529;
-  padding: 20px;
+  padding: 30px;
   width: 20;
 }
 
@@ -148,4 +148,10 @@ a {
   padding-top: 40%;
   padding-bottom: 40%;
   display: none;
+}
+
+@media screen and (max-width: 768px) {
+  #occasionsDropdown {
+    margin-bottom: 20px;
+  }
 }
